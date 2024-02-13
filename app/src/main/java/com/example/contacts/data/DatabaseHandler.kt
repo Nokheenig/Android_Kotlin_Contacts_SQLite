@@ -74,4 +74,16 @@ class DatabaseHandler (context: Context):
         return contactList
     }
 
+    fun updateContact(contact: Contact): Int {
+        val db = this.writableDatabase
+
+        val values = ContentValues()
+        values.put(Constants.KEY_NAME, contact.name)
+        values.put(Constants.KEY_PHONE_NUMBER, contact.phoneNumber)
+
+        //update row
+        return db.update(Constants.TABLE_NAME, values, Constants.KEY_ID + "=?",
+            arrayOf(contact.id.toString()))
+    }
+
 }
