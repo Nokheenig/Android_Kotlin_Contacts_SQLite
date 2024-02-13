@@ -21,28 +21,20 @@ class MainActivity : AppCompatActivity() {
         db.addContact(Contact("Maria", "2139021370"))
         db.addContact(Contact("Ana", "3487349078"))
 
-        val contact = db.getContact(3)
-        textViewData.text = "ID: ${contact.id}\n" +
-                            "Name: ${contact.name}\n" +
-                            "PhoneNumber: ${contact.phoneNumber}"
+        val contact1 = db.getContact(1)
+        val contact2 = db.getContact(2)
 
-        val newContact = contact
-        newContact.name = "Alina"
-        newContact.phoneNumber = "1298217398"
-        db.updateContact(newContact)
+        db.deleteContact(contact1)
+        db.deleteContact(contact2)
 
-        val updatedContact = db.getContact(3)
-        textViewData.append("\n\nID: ${updatedContact.id}\n" +
-                            "Updated Name: ${updatedContact.name}\n" +
-                            "Updated PhoneNumber: ${updatedContact.phoneNumber}")
+        val contactList = db.getAllContacts()
+        var data = ""
+        for (contact in contactList) {
+            data += "\nName: ${contact.name} " +
+                    "\nPhoneNumber: ${contact.phoneNumber}"
+        }
+        textViewData.text = data
 
-
-//        val contactList = db.getAllContacts()
-//        var data = ""
-//        for (contact in contactList) {
-//            data += "\nName: ${contact.name} " +
-//                    "\nPhoneNumber: ${contact.phoneNumber}"
-//        }
-//        textViewData.text = data
+        textViewData.append("\n\nThe number of contacts: ${db.getContactsCount()}")
     }
 }

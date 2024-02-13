@@ -86,4 +86,19 @@ class DatabaseHandler (context: Context):
             arrayOf(contact.id.toString()))
     }
 
+    fun deleteContact(contact: Contact) {
+        val db = this.writableDatabase
+
+        db.delete(Constants.TABLE_NAME, Constants.KEY_ID + "=?",
+            arrayOf(contact.id.toString()))
+    }
+
+    fun getContactsCount(): Int {
+        val countQuery = "SELECT * FROM ${Constants.TABLE_NAME}"
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(countQuery, null)
+
+        return   cursor.count
+    }
+
 }
