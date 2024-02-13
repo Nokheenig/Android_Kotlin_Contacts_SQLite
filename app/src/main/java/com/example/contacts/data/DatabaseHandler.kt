@@ -52,4 +52,26 @@ class DatabaseHandler (context: Context):
         return  Contact(cursor.getString(0).toInt(), cursor.getString(1), cursor.getString(2))
     }
 
+    fun getAllContacts():MutableList<Contact> {
+        val db = this.readableDatabase
+
+        val contactList = mutableListOf<Contact>()
+
+        val selectAll = "SELECT * FROM ${Constants.TABLE_NAME}"
+        val cursor = db.rawQuery(selectAll, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val contact = Contact(
+                    id = cursor.getString(0).toInt(),
+                    name = cursor.getString(1),
+                    phoneNumber = cursor.getString(2))
+
+                //add contact to the contact list
+                contactList.add(contact)
+            } while (cursor.moveToNext())
+        }
+        return contactList
+    }
+
 }
